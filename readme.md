@@ -14,11 +14,13 @@ standardizes the format
 
         add to scripts in package.json
 
-        then use command
+        then use command to ensure prettier has formated files in src
             npm run format
 
 eslint
 all about style and methods
+    install it 
+        npm install -D eslint eslint-config-prettier
 
     to check it
         npm run lint
@@ -34,6 +36,7 @@ bundler
         less complex than WebPack
 
         npm install -D parcel-bundler
+        
         but used
         npm i parcel
             instead given an error using the previous

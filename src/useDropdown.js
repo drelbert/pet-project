@@ -9,8 +9,8 @@ const useDropdown = (label, defaultState, options) => {
       <select
         id={id}
         value={state}
-        onChange={event => setState(event.target.value)}
-        onBlur={event => setState(event.target.value)}
+        onChange={e => setState(e.target.value)}
+        onBlur={e => setState(e.target.value)}
         disabled={options.length === 0}
       >
         <option>All</option>
@@ -22,6 +22,7 @@ const useDropdown = (label, defaultState, options) => {
       </select>
     </label>
   );
+
   return [state, Dropdown, setState];
 };
 
