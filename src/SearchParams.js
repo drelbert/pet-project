@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import pet, { ANIMALS } from "@frontendmasters/pet";
 import useDropdown from "./useDropdown";
 import Results from "./Results";
+import ThemeContext from "./ThemeContext";
 
 //effect lifecycle step one: SearchParams renders for the first time with all the variables
 const SearchParams = () => {
@@ -14,6 +15,7 @@ const SearchParams = () => {
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
   const [pets, setPets] = useState([]);
+  const [theme, setTheme] = useContext(ThemeContext);
 
   //async function returns a promise that resolves when funct completes
   async function requestPets() {
@@ -62,7 +64,20 @@ const SearchParams = () => {
         </label>
         <AnimalDropdown />
         <BreedDropdown />
-        <button>SUBMIT</button>
+        <label htmlFor="theme">
+          Theme
+          <select
+            value={theme}
+            onChange={e => setTheme(e.target.value)}
+            onBlur={e => setTheme(e.target.value)}
+          >
+            <option value="grey">Grey</option>
+            <option value="darkgrey">Dark Grey</option>
+            <option value="darkblue">Dark Blue</option>
+            <option value="pink">Pink</option>
+          </select>
+        </label>
+        <button style={{ backgroundColor: theme }}>SUBMIT</button>
       </form>
       <Results pets={pets} />
     </div>
