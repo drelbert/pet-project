@@ -8,8 +8,10 @@ import ThemeContext from "./ThemeContext";
 const SearchParams = () => {
   //this is a hook and enables stateful logic
   //useState creates the hook
-  //returns an array of 2 things, [current state, updater function]
+
   //and the variable is using destructuring
+  //returns an array of 2 things, [current state, updater function]
+
   const [location, setLocation] = useState("Seattle, WA");
   const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
