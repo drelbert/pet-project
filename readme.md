@@ -1,8 +1,8 @@
 https://btholt.github.io/complete-intro-to-react-v5/
 
-
 # to run the project
-  npm run dev
+
+npm run dev
 
 create the project with
 npm init -y (for no questions)
@@ -19,8 +19,8 @@ standardizes the format
 
 eslint
 all about style and methods
-    install it 
-        npm install -D eslint eslint-config-prettier
+install it
+npm install -D eslint eslint-config-prettier
 
     to check it
         npm run lint
@@ -36,12 +36,10 @@ bundler
         less complex than WebPack
 
         npm install -D parcel-bundler
-        
+
         but used
         npm i parcel
             instead given an error using the previous
-
-
 
 adding plugins:
 configuring eslint for react
@@ -58,3 +56,8 @@ updated eslint.json with
 npm i -D eslint-plugin-react-hooks
 
 defines (from React team) how to write hooks
+
+# Post SSR build steps
+
+    use
+        npm run start
