@@ -1,25 +1,31 @@
-import React, { useState, useEffect, useContext } from "react";
-import pet, { ANIMALS } from "@frontendmasters/pet";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  FunctionComponent
+} from "react";
+import pet, { ANIMALS, Animal } from "@frontendmasters/pet";
+import { RouteComponentProps } from "@reach/router";
 import useDropdown from "./useDropdown";
 import Results from "./Results";
 import ThemeContext from "./ThemeContext";
 
-//effect lifecycle step one: SearchParams renders for the first time with all the variables
-const SearchParams = () => {
-  //this is a hook and enables stateful logic
-  //useState creates the hook
+// effect lifecycle step one: SearchParams renders for the first time with all the variables
+const SearchParams: FunctionComponent<RouteComponentProps> = () => {
+  // this is a hook and enables stateful logic
+  // useState creates the hook
 
-  //and the variable is using destructuring
-  //returns an array of 2 things, [current state, updater function]
+  // and the variable is using destructuring
+  // returns an array of 2 things, [current state, updater function]
 
   const [location, setLocation] = useState("Seattle, WA");
-  const [breeds, setBreeds] = useState([]);
+  const [breeds, setBreeds] = useState([] as string[]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState([] as Animal[]);
   const [theme, setTheme] = useContext(ThemeContext);
 
-  //async function returns a promise that resolves when funct completes
+  // async function returns a promise that resolves when funct completes
   async function requestPets() {
     const { animals } = await pet.animals({
       location,
@@ -30,9 +36,9 @@ const SearchParams = () => {
     setPets(animals || []);
   }
 
-  //effect lifecycle step two is the scheduling of useEffect
-  //effect lifecycle step four is the running of the effect and the calling of the function
-  //useEffect getting a function that is just scheduling useEffect to run after the below return()
+  // effect lifecycle step two is the scheduling of useEffect
+  // effect lifecycle step four is the running of the effect and the calling of the function
+  // useEffect getting a function that is just scheduling useEffect to run after the below return()
   useEffect(() => {
     setBreeds([]);
     setBreed(" ");
@@ -41,11 +47,11 @@ const SearchParams = () => {
       const breedStrings = apiBreeds.map(({ name }) => name);
       setBreeds(breedStrings);
     }, console.error);
-  }, [animal, setBreed, setBreeds]); //this [] is a set of dependencies to control the useEffect schedule and update
+  }, [animal, setBreed, setBreeds]); // this [] is a set of dependencies to control the useEffect schedule and update
 
-  //effect lifecycle step three is the return of all the markup to be rendered to the DOM
-  //note the {} is for using the expressions from above
-  //eg location is declared above and will render in as an h1
+  // effect lifecycle step three is the return of all the markup to be rendered to the DOM
+  // note the {} is for using the expressions from above
+  // eg location is declared above and will render in as an h1
   return (
     <div className="search-params">
       <h1>{location}</h1>

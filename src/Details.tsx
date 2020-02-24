@@ -1,27 +1,37 @@
 import React from "react";
-import pet from "@frontendmasters/pet";
-import { navigate } from "@reach/router";
+import pet, { Photo } from "@frontendmasters/pet";
+import { navigate, RouteComponentProps } from "@reach/router";
 import Modal from "./Modal";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 
-class Details extends React.Component {
-  // Non-Babel way
-  // constructor(props) {
-  //   super(props); // Since this is constructed with props, they have to be handed up to React
-
-  //   this.state = {
-  //     // Setting state for this component,
-  //     loading: true
-  //   };
-  // }
-
+// Defining the types of props passed in using a type parameter <>
+class Details extends React.Component<
+  RouteComponentProps<{
+    id: string;
+  }>
+> {
   // Using Babel and Parcel together
-  state = { loading: true, showModal: false };
-  componentDidMount() {
-    // Lifecycle mehods similar to useEffect
+  public state = {
+    loading: true,
+    showModal: false,
+    name: "",
+    animal: "",
+    location: "",
+    description: "",
+    media: [] as Photo[],
+    url: "",
+    breed: ""
+  };
+  // Lifecycle mehods similar to useEffect
+  public componentDidMount() {
+    if (!this.props.id) {
+      navigate("/");
+      return;
+    }
+
     pet
-      .animal(this.props.id) // this.props is immutable = read only since its from parent
+      .animal(+this.props.id) // this.props is immutable = read only since its from parent
       .then(({ animal }) => {
         //  => will not create a new context
         this.setState({
@@ -34,7 +44,8 @@ class Details extends React.Component {
           breed: animal.breeds.primary,
           loading: false
         });
-      }, console.error);
+      })
+      .catch((err: Error) => this.setState({ error: err }));
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
   adopt = () => navigate(this.state.url);
@@ -80,7 +91,11 @@ class Details extends React.Component {
   }
 }
 
-export default function DetailsWithErrorBoundary(props) {
+export default function DetailsWithErrorBoundary(
+  props: RouteComponentProps<{
+    id: string;
+  }>
+) {
   return (
     <ErrorBoundary>
       <Details {...props} />
